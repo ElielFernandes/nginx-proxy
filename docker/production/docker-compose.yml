@@ -1,0 +1,20 @@
+version: "3.0"
+volumes:
+  ssl:
+    external: true
+services:
+  nginx:
+    build: .
+    container_name: nginx
+    hostname: nginx
+    restart: unless-stopped
+    volumes:
+      - ./../../data/production/nginx:/etc/nginx/conf.d
+      - ssl:/etc/nginx/certs
+    ports:
+      - "80:80"
+      - "443:443"
+networks:
+  default:
+    external:
+      name: app_network
